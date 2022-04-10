@@ -1,6 +1,8 @@
 const moment = require("moment");
+moment.locale("zh-cn");
 
 module.exports = {
+  base: "lz-blog",
   title: "LongZai",
   description: "龙仔的个人博客！",
   head: [
@@ -16,10 +18,7 @@ module.exports = {
       "@vuepress/last-updated",
       {
         transformer: (timestamp, lang) => {
-          // 不要忘了安装 moment
-          const moment = require("moment");
-          moment.locale(lang);
-          return moment(timestamp).fromNow();
+          return moment(timestamp).format("ll");
         },
       },
     ],
@@ -28,6 +27,7 @@ module.exports = {
     logo: "/assets/img/logo.png",
     displayAllHeaders: true,
     activeHeaderLinks: false,
+    lastUpdated: "更新时间",
     nav: [
       {text: "Home", link: "/"},
       {
