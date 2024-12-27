@@ -5,24 +5,15 @@ export default defineConfig({
   title: "Lz blog",
   description: "记录开发日常",
   cleanUrls:true,
+  head: [
+    ['link', { rel: 'icon', href: '/logo.jpg' }]
+  ],
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
+    logo:'/logo.jpg',
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' },
       { text: '问题记录', link: '/问题记录/el-tabs切换，对象数据发生变化' }
     ],
-
     sidebar: {
-      '/':[
-        {
-          text: 'Examples',
-          items: [
-            { text: 'Markdown Examples', link: '/markdown-examples' },
-            { text: 'Runtime API Examples', link: '/api-examples' }
-          ]
-        }
-      ],
       '/问题记录/':[
         {
           text: '问题记录',
@@ -33,7 +24,6 @@ export default defineConfig({
         }
       ],
     },
-
     socialLinks: [
       { icon: 'github', link: 'https://github.com/dargon-start/lz-blog' }
     ]
