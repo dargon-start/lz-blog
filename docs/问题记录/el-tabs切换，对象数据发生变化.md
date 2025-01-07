@@ -1,4 +1,4 @@
-```vue
+```js
 <el-tabs v-model="active" class="mt12">
   <el-tab-pane name="operate" label="操作记录">
     <OperationRecord
@@ -32,7 +32,7 @@ computed: {
 },
 ```
 
-```vue
+```js
 //监控data中的数据变化
   watch: {
     incomingValue: {
@@ -53,7 +53,7 @@ incomingValue 需要传入一个引用对象，不能之家传一个对象
 
 下面代码会造成监听incomingValue的值发生变化，重复调用接口
 
-```vue
+```js
 <OperationRecord
   v-if="detail.rectQuestCode"
   :incomingValue="{
