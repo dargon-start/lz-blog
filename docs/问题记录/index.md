@@ -16,7 +16,7 @@
 ### CTRL+SHIFT+[ 
 ## CTRL+SHIFT+]
 
-![图片文字](/docs/JavaScript/1.png "悬停提示文本")s
+![图片文字](/JavaScript/1.png "悬停提示文本")
 
 ```js
 funciton foo(){
