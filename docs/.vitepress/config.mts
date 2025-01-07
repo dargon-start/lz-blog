@@ -56,8 +56,8 @@ export default defineConfig({
     logo:'/logo.jpg',
     nav: [
       { text: '问题记录', link: '/问题记录/el-tabs切换，对象数据发生变化' },
-      { text: 'JavaScript', link: '/JavaScript/基本引用类型' }
-
+      { text: 'JavaScript', link: '/JavaScript/基本引用类型' },
+      { text: 'CSS', link: '/CSS/css中隐藏元素的方式' }
     ],
     sidebar: {
       '/问题记录/':[
