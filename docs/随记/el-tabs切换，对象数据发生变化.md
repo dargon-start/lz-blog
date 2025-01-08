@@ -1,3 +1,5 @@
+# el-tabs切换，对象数据发生变化
+
 ```js
 <el-tabs v-model="active" class="mt12">
   <el-tab-pane name="operate" label="操作记录">

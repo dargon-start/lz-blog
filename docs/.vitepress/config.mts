@@ -55,21 +55,14 @@ export default defineConfig({
   themeConfig: {
     logo:'/logo.jpg',
     nav: [
-      { text: '问题记录', link: '/问题记录/el-tabs切换，对象数据发生变化' },
+      { text: '随记', link: '/随记/el-tabs切换，对象数据发生变化' },
       { text: 'JavaScript', link: '/JavaScript/基本引用类型' },
       { text: 'CSS', link: '/CSS/css中隐藏元素的方式' }
     ],
     sidebar: {
-      '/问题记录/':[
-        {
-          text: '问题记录',
-          items: [
-            { text: 'el-tabs切换，对象数据发生变化', link: '/问题记录/el-tabs切换，对象数据发生变化' },
-            { text: '测试路由', link: '/问题记录/index' }
-          ]
-        }
-      ],
-      '/JavaScript/': [walk('./docs/','JavaScript')]
+      '/随记/':[walk('./docs/','随记')],
+      '/JavaScript/': [walk('./docs/','JavaScript')],
+      '/CSS/':[walk('./docs/','CSS')]
     },
     socialLinks: [
       { icon: 'github', link: 'https://github.com/dargon-start/lz-blog' }
