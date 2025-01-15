@@ -98,9 +98,6 @@ section {
 - transform: css3 属性，可以对元素进行变换(2d/3d)，包括平移 translate,旋转 rotate,缩放 scale,等等
 - perspective: css3 属性，当元素涉及 3d 变换时，perspective 可以定义我们眼睛看到的 3d 立体效果，即空间感
 
-`3D`视角示意图如下所示：
-
-![](../../image/interview-css-3.png)
 
 举个例子：
 
