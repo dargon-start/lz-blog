@@ -6,11 +6,11 @@
 
 我们可以把网页解刨成：背景层、内容层、悬浮层
 
-![](../../images/interview-css-1.png)
+![](/images/interview-css-1.png)
 
 当滚动鼠标滑轮的时候，各个图层以不同的速度移动，形成视觉差的效果
 
-![](../../images/interview-css-2.png)
+![](/images/interview-css-2.png)
 
 ## 二、实现方式
 
