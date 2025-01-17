@@ -57,12 +57,14 @@ export default defineConfig({
     nav: [
       { text: '随记', link: '/随记/el-tabs切换，对象数据发生变化' },
       { text: 'JavaScript', link: '/JavaScript/基本引用类型' },
-      { text: 'CSS', link: '/CSS/css中隐藏元素的方式' }
+      { text: 'CSS', link: '/CSS/css中隐藏元素的方式' },
+      { text: '工程化', link: '/工程化/npm包打补丁' }
     ],
     sidebar: {
       '/随记/':[walk('./docs/','随记')],
       '/JavaScript/': [walk('./docs/','JavaScript')],
-      '/CSS/':[walk('./docs/','CSS')]
+      '/CSS/':[walk('./docs/','CSS')],
+      '/工程化':[walk('./docs/', '工程化')]
     },
     socialLinks: [
       { icon: 'github', link: 'https://github.com/dargon-start/lz-blog' }
