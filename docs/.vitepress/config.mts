@@ -42,6 +42,8 @@ export default defineConfig({
   head: [
     ['link', { rel: 'icon', href: '/logo.jpg' }]
   ],
+  // 忽略文章中的死链接，VitePress 不会因死链接而导致构建失败
+  ignoreDeadLinks: true,
   // 是否展示最近git提交时间
   lastUpdated: true,
 
@@ -71,6 +73,7 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/dargon-start/lz-blog' }
     ],
+    
     // 右侧文章索引级别
     outline: "deep",
     // 右侧索引展示文本
@@ -106,5 +109,7 @@ export default defineConfig({
         },
       },
     },
+    
   },
+  
 })
