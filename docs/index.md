@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "Lz blog"
-  text: "记录开发日常"
+  text: "记录学习、成长！"
   actions:
     - theme: brand
       text: 随记
@@ -15,7 +15,12 @@ hero:
     - theme: brand
       text: JavaScript
       link: /JavaScript/语法基础
-      
+    - theme: brand
+      text: Vue
+      link: /Vue/Vue3基础
+    - theme: brand
+      text: 工程化
+      link: /工程化/npm包打补丁
 
 # features:
 #   - title: css编写技巧
