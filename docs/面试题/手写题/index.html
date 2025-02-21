@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+       .container {
+        height: 200px;
+        overflow: hidden;
+      }
+      /*左右进行绝对定位*/
+      .left,
+      .right {
+        height: 100%;
+        top: 0;
+        background: #ff69b4;
+      }
+      .left {
+        float: left;
+        width: 200px;
+      }
+      .right {
+        float: right;
+        width: 200px;
+      }
+      /* 触发bfc */
+      .center {
+        height: 100%;
+        background: #659;
+        overflow: hidden;
+      }
+      div {
+        width: 100px;
+        height: 100px;
+        background-color: aqua;
+      }
+      div:not(.abc) {
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+   
+    <div class="container">
+      <div class="left">left</div>
+      <div class="right">right</div>
+      <div class="center">center</div>
+
+    </div>
+
+  </body>
+</html>
