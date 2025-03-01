@@ -1,4 +1,4 @@
-class LzeventBus{
+class LzeventEmmiter{
   constructor (){
     this.eventBus = {}
   }
@@ -41,7 +41,7 @@ class LzeventBus{
 }
 
 
-const eventbus = new LzeventBus();
+const eventbus = new LzeventEmmiter();
 
 const foo = ()=>{
   console.log('fn');
@@ -57,5 +57,5 @@ eventbus.on('event1',foo);
 // eventbus.off('event1',foo)
 
 
-eventbus.emit('event2',12,32);
+eventbus.emit('event1',12,32);
 
