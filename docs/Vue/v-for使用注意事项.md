@@ -176,4 +176,98 @@ vue源码中通过判断是否有key，来执行不同的对比函数。
     }
 ```
 
-总结：添加key以后，vue会通过key来执行diff算法匹配新旧结点，计算出结点最大的复用，效率更高。
+上面代码片段用于高效更新列表（如 `v-for` 生成的循环元素）的核心 diff 算法（双端比较 + 最长递增子序列优化）。以下是其替换循环元素的关键步骤分析：
+
+---
+
+### **1. 建立新节点的 Key-Index 映射表**
+```javascript
+const keyToNewIndexMap = new Map()
+for (i = s2; i <= e2; i++) {
+  const nextChild = c2[i] // 新子节点
+  if (nextChild.key != null) {
+    keyToNewIndexMap.set(nextChild.key, i) // 记录 key 对应的新索引
+  }
+}
+```
+- **目的**：快速通过 `key` 查找新节点位置，避免后续遍历。
+
+---
+
+### **2. 遍历旧节点，寻找可复用的节点**
+```javascript
+// newIndexToOldIndexMa表示新节点在旧节点中的索引（0 表示新节点无对应旧节点）。
+const newIndexToOldIndexMap = new Array(toBePatched).fill(0)
+for (i = s1; i <= e1; i++) {
+  const prevChild = c1[i] // 旧子节点
+  if (patched >= toBePatched) {
+    unmount(prevChild) // 多余的旧节点直接卸载
+    continue
+  }
+  
+  // 通过 key 或遍历查找新节点位置
+  let newIndex = prevChild.key != null 
+    ? keyToNewIndexMap.get(prevChild.key) 
+    : findIndexByType(prevChild, c2, s2, e2)
+
+  if (newIndex === undefined) {
+    unmount(prevChild) // 无对应新节点，卸载
+  } else {
+    newIndexToOldIndexMap[newIndex - s2] = i + 1 // 记录新旧索引关系
+    patch(prevChild, c2[newIndex]) // 更新节点内容
+    patched++
+  }
+}
+```
+
+- **核心操作**：
+  - 复用相同 `key` 或同类型节点，通过 `patch()` 更新内容。
+  - 无复用的旧节点被卸载。
+  - 记录新旧索引映射到 `newIndexToOldIndexMap`（0 表示新节点无对应旧节点）。
+
+---
+
+### **3. 计算最长递增子序列（LIS）**
+```javascript
+const increasingNewIndexSequence = moved 
+  ? getSequence(newIndexToOldIndexMap) 
+  : []
+```
+- **目的**：LIS 代表**无需移动的节点**，其相对顺序在新旧列表中一致。
+- **优化依据**：移动不在 LIS 中的节点，最小化 DOM 操作。
+
+---
+
+### **4. 移动或挂载新节点**
+```javascript
+for (i = toBePatched - 1; i >= 0; i--) {
+  const nextIndex = s2 + i
+  const nextChild = c2[nextIndex]
+  
+  if (newIndexToOldIndexMap[i] === 0) {
+    // 全新节点，挂载
+    patch(null, nextChild, container, anchor)
+  } else if (moved) {
+    // 需要移动的节点
+    if (j < 0 || i !== increasingNewIndexSequence[j]) {
+      move(nextChild, container, anchor)
+    } else {
+      j-- // LIS 中的节点保持不动
+    }
+  }
+}
+```
+- **关键逻辑**：
+  - 无对应旧节点时，挂载新节点。
+  - 移动不在 LIS 中的节点到正确位置。
+  - LIS 中的节点已处于正确位置，无需移动。
+
+---
+
+### **总结：替换循环元素的策略**
+1. **复用**：通过 `key` 或类型匹配复用旧节点，更新内容。
+2. **卸载**：无对应新节点的旧节点被移除。
+3. **挂载**：新增节点插入到正确位置。
+4. **移动优化**：通过 LIS 减少不必要的 DOM 移动。
+
+这种算法以 `O(n)` 复杂度高效处理列表更新，优先复用节点，避免大规模 DOM 操作，是 Vue 高效渲染的核心机制之一。

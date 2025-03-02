@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>  
+    <div class="app"></div>
+
+
+    <script>
+        function render(vnode){
+            if(typeof vnode === 'number'){
+                vnode = String(vnode)
+            }
+
+            if(typeof vnode === 'string'){
+                return document.createTextNode(vnode)
+            }
+
+            const dom = document.createElement(vnode.tag)
+            // 添加属性
+            if(vnode.attrs){
+                const attrs = Object.keys(vnode.attrs)
+                attrs.forEach(key => {
+                    const value = vnode.attrs[key]
+                    dom.setAttribute(key,value)
+                });
+            }
+            // 遍历子元素
+            vnode.children.forEach(chil => {
+                dom.appendChild(render(chil))
+            })
+
+            return dom
+        }
+
+
+        const vnodes = {
+            tag: 'DIV',
+            attrs:{
+                id:'app'
+            },
+            children: [
+                {
+                    tag: 'div',
+                    children: [
+                        { tag: 'A', children: ['测试1'] }
+                    ]
+                },
+                {
+                    tag: 'div',
+                    children: [
+                        { tag: 'A', children: ['测试2'] },
+                        { tag: 'A', children: ['测试2'] }
+                    ]
+                }
+            ]
+        }
+
+        const doms = render(vnodes)
+
+        console.log(doms);
+
+        const app = document.querySelector('.app')
+
+        app.appendChild(doms)
+    </script>
+</body>
+</html>

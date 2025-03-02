@@ -50,5 +50,27 @@
 
     </div>
 
+    <input type="text" class="input">
+
+    <script>
+      // 防抖
+      function debounce(fn,delay){
+        let timer = null
+        return function(...args){
+          if(timer) clearTimeout(timer)
+          
+          timer = setTimeout(()=>{
+            fn.apply(this,args)
+          },delay)
+        }
+      }
+
+      document.addEventListener('input',debounce(()=>{
+        console.log('ceshi');
+      },500))
+
+
+
+    </script>
   </body>
 </html>
