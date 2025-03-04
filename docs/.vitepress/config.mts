@@ -62,6 +62,7 @@ export default defineConfig({
       { text: 'CSS', link: '/CSS/css中隐藏元素的方式' },
       { text: '工程化', link: '/工程化/npm包打补丁' },
       { text: 'Vue', link: '/Vue/Vue3基础' },
+      { text: 'React', link: '/React/Immutable' },
     ],
     sidebar: {
       '/随记/':[walk('./docs/','随记')],
@@ -69,6 +70,7 @@ export default defineConfig({
       '/CSS/':[walk('./docs/','CSS')],
       '/工程化':[walk('./docs/', '工程化')],
       '/Vue':[walk('./docs/', 'Vue')],
+      '/React':[walk('./docs/', 'React')],
     },
     socialLinks: [
       { icon: 'github', link: 'https://github.com/dargon-start/lz-blog' }
