@@ -65,9 +65,22 @@
         }
       }
 
-      document.addEventListener('input',debounce(()=>{
-        console.log('ceshi');
-      },500))
+      // document.addEventListener('input',debounce(()=>{
+      //   console.log('ceshi');
+      // },500))
+
+      function foo(){
+        console.log(this);
+      }
+
+      const obj = {
+        foo,
+        dfo:debounce(foo)
+      }
+
+
+      obj.foo()
+      obj.dfo()
 
 
 

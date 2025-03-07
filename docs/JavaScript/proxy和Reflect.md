@@ -1,4 +1,4 @@
-## Proxy和Reflect
+# Proxy和Reflect
 
 Proxy是es6中新增的代理对象，通过Proxy，我们可以监听对象的变化，实现响应式。
 

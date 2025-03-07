@@ -1,4 +1,4 @@
-## This
+# This
 
 ### 全局指向
 
@@ -118,9 +118,9 @@ let res = say.bind(obj2).call(obj); //wang
 
 例：new关键字创建新的对象，this绑定new创建的对象。
 
-第一次绑定的是{name:'王哥‘ ，age:12}
+第一次绑定的是`{name:'王哥‘ ，age:12}`
 
-第二次绑定的是{name:'li'，age:45}
+第二次绑定的是`{name:'li'，age:45}`
 
 ```js
 function Person(name, age) {
