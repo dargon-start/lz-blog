@@ -14,7 +14,7 @@
 
 
 如下图，点击link时，浏览器请求了getting-started.json文件
-![Alt text](image.png)
+![Alt text](./images/nextjs-2.png)
 
 刷页面时，回去请求当前页面的html资源，而不是去更新原有页面内容。
-![Alt text](image-1.png)
+![Alt text](./images/nextjs-3.png)
