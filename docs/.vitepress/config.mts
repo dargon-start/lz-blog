@@ -63,6 +63,7 @@ export default defineConfig({
       { text: '工程化', link: '/工程化/npm包打补丁' },
       { text: 'Vue', link: '/Vue/Vue3基础' },
       { text: 'React', link: '/React/Immutable' },
+      { text: 'SSR', link: '/SSR/nextJs渲染原理' },
     ],
     sidebar: {
       '/随记/':[walk('./docs/','随记')],
@@ -71,6 +72,7 @@ export default defineConfig({
       '/工程化':[walk('./docs/', '工程化')],
       '/Vue':[walk('./docs/', 'Vue')],
       '/React':[walk('./docs/', 'React')],
+      '/SSR':[walk('./docs/', 'SSR')],
     },
     socialLinks: [
       { icon: 'github', link: 'https://github.com/dargon-start/lz-blog' }
