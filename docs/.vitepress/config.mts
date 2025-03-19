@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 import path from 'path';
 import fs from 'fs';
+import DemoPreview from './config/plugin'
 
 // 动态生成侧边栏函数
 export const walk = function (dir, subDir = '') {
@@ -53,6 +54,7 @@ export default defineConfig({
     lineNumbers: true,
     // 不写语言名时，默认识别为js
     defaultHighlightLang: "js",
+    config: (md) => DemoPreview(md)
   },
   themeConfig: {
     logo:'/logo.jpg',

@@ -22,8 +22,6 @@
   },
 ```
 
-
-
 ### SplitChunks
 通过splitChunks的分包模式来进行代码分离。
 
