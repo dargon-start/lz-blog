@@ -48,13 +48,15 @@ export default (md: MarkdownIt) => {
 
               if (!source) throw new Error(`Incorrect source file: ${sourceFile}`)
       
-              return `<DemoBlock :demos="demos" source="${encodeURIComponent(source)}"
-               path="${sourceFile}" 
-               raw-source="${encodeURIComponent(
-                source
-              )}" description="${encodeURIComponent(localMd.render(description))}">`
+              return `<DemoBlock source="${encodeURIComponent(
+                  md.render(`\`\`\` vue\n${source}\`\`\``)
+                  )}" path="${sourceFile}" raw-source="${encodeURIComponent(
+                    source
+                  )}" description="${encodeURIComponent(md.render(description))}">
+                  <template #source><ep-${sourceFile.replaceAll('/', '-')}/></template>
+                </DemoBlock>`
             } else {
-              return '</DemoBlock>'
+              return ''
             }
           },
     })
