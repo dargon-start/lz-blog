@@ -1,7 +1,8 @@
 import { defineConfig } from 'vitepress'
 import path from 'path';
 import fs from 'fs';
-import DemoPreview from './config/plugin'
+import DemoPreview from './plugins/plugin'
+import { getViteConfig } from './config/vite'
 
 // 动态生成侧边栏函数
 export const walk = function (dir, subDir = '') {
@@ -36,7 +37,7 @@ export const walk = function (dir, subDir = '') {
 const baseDir = './docs/'
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default (configEnv) => ({
   title: "Lz blog",
   description: "记录开发日常",
   cleanUrls:true,
@@ -54,7 +55,6 @@ export default defineConfig({
     lineNumbers: true,
     // 不写语言名时，默认识别为js
     defaultHighlightLang: "js",
-    config: (md) => DemoPreview(md)
   },
   themeConfig: {
     logo:'/logo.jpg',

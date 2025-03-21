@@ -13,20 +13,6 @@ export default (md: MarkdownIt) => {
         validate(params) {
             return params.trim().match(/^demo\s*(.*)$/)
         },
-        // render(tokens, idx) {
-
-        //     console.log(tokens, idx);
-            
-        // const m = tokens[idx].info.trim().match(/^demo\s*(.*)$/)
-        // if (tokens[idx].nesting === 1) {
-        //     const description = m && m.length > 1 ? m[1] : ''
-        //     const content = tokens[idx + 2].content
-        //     console.log(content,'content');
-            
-        //     return `<DemoBlock source="${encodeURIComponent(content)}">`
-        // }
-        //     return '</DemoBlock>'
-        // }
         render(tokens, idx) {
             const m = tokens[idx].info.trim().match(/^demo\s*(.*)$/)
             if (tokens[idx].nesting === 1 /* means the tag is opening */) {
@@ -54,9 +40,9 @@ export default (md: MarkdownIt) => {
                     source
                   )}" description="${encodeURIComponent(md.render(description))}">
                   <template #source><ep-${sourceFile.replaceAll('/', '-')}/></template>
-                </DemoBlock>`
+                `
             } else {
-              return ''
+              return '</DemoBlock>'
             }
           },
     })
