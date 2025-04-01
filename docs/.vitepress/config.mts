@@ -1,8 +1,7 @@
 import { defineConfig } from 'vitepress'
 import path from 'path';
 import fs from 'fs';
-import DemoPreview from './plugins/plugin'
-import { getViteConfig } from './config/vite'
+
 
 // 动态生成侧边栏函数
 export const walk = function (dir, subDir = '') {
