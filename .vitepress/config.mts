@@ -40,14 +40,10 @@ export default defineConfig({
   title: "Lz blog",
   description: "龙仔个人博客",
   cleanUrls:true,
-  head: [
-    ['link', { rel: 'icon', href: '/logo.jpg' }]
-  ],
   // 忽略文章中的死链接，VitePress 不会因死链接而导致构建失败
   ignoreDeadLinks: true,
   // 是否展示最近git提交时间
   lastUpdated: true,
-
   // markdown-it插件配置
   markdown: {
     // 默认显示行号
@@ -56,7 +52,7 @@ export default defineConfig({
     defaultHighlightLang: "js",
   },
   themeConfig: {
-    logo:'/logo.jpg',
+    logo:'/logo.png',
     nav: [
       { text: '随记', link: '/随记/el-tabs切换，对象数据发生变化' },
       { text: 'JavaScript', link: '/JavaScript/基本引用类型' },

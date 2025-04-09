@@ -29,9 +29,6 @@ export default createContentLoader(
       const pages: pageType[] = []
 
       rawData.forEach(({ frontmatter, src, url }) => {
-        console.log("url", url);
-        console.log("frontmatter", frontmatter);
-        
         
         // 用页面的一级标题作为文章标题（因为sidebar中可能是精简的标题）
         let title:string =
@@ -78,10 +75,10 @@ export default createContentLoader(
             // 统一空白字符为一个空格
             .replace(/\s/g, " ")
             // 仅保留可能显示的部分，减小数据大小
-            .slice(0, 200) || "",
+            .slice(0, 50) || "",
           link,
           // linkText 可以显示更新时间
-          linkText: dayjs(frontmatter.date).format('YYYY-MM-DD HH:mm:ss'),
+          linkText: dayjs(frontmatter.date).add(8, 'hour').format('YYYY-MM-DD HH:mm:ss'),
         }
 
         pages.push(page);

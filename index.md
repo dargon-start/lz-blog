@@ -4,7 +4,11 @@ layout: home
 
 hero:
   name: "Lz blog"
-  text: "实践是检验真理的唯一标准！"
+  text: "龙仔的个人博客"
+  tagline: "实践是检验真理的唯一标准！"
+  image:
+    src: /logo.png
+    alt: VitePress
   actions:
     - theme: brand
       text: 随记
