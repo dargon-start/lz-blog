@@ -23,6 +23,12 @@ hero:
       text: Vue
       link: /Vue/Vue3基础
     - theme: brand
+      text: React
+      link: /React/Immutable
+    - theme: brand
+      text: SSR
+      link: /SSR/nextJs渲染原理
+    - theme: brand
       text: 工程化
       link: /工程化/npm包打补丁
 

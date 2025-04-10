@@ -13,7 +13,7 @@
           reactions-enabled="1"
           emit-metadata="0"
           input-position="top"
-          theme="light_tritanopia"
+          :theme="isDark ? 'dark_tritanopia' : 'light_tritanopia'"
           lang="zh-CN"
         />
       </div>
