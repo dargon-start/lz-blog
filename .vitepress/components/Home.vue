@@ -7,35 +7,7 @@ import { nextTick, onMounted, ref } from 'vue'
 import VPFeatures from 'vitepress/dist/client/theme-default/components/VPFeatures.vue'
 import { data as pages } from './create.data'
 
-
 const featureRef = ref(null)
-
-// onMounted(() => {
-//   nextTick(() => {
-//     // 处理文本省略
-//     console.log(featureRef.value);
-    
-//     const details = featureRef.value?.$el.querySelectorAll('.VPLink  .details') as NodeListOf<HTMLElement>
-//     console.log(details);
-
-//     for (let i = 0; i < details.length; i++) {
-//       const el = details[i] as HTMLElement
-//       const s = el.innerText;
-//       const n = el.offsetHeight; 
-
-//       for(let i=0; i<s.length; i++) {
-//         el.innerHTML = s.slice(0, i);
-//         if(n < el.scrollHeight) {
-//           el.style.overflow = 'hidden';
-//           el.innerHTML = s.slice(0, i-3) + '...';
-//           break;
-//         }
-//       }
-//     }
-//   })
-// })
-
-
 
 </script>
 

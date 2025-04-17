@@ -40,6 +40,9 @@ export default defineConfig({
   title: "Lz blog",
   description: "龙仔个人博客",
   cleanUrls:true,
+  head:[
+    ['link', { rel: 'icon', href: '/logo.png' }],
+  ],
   // 忽略文章中的死链接，VitePress 不会因死链接而导致构建失败
   ignoreDeadLinks: true,
   // 是否展示最近git提交时间
