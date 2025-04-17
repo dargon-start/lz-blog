@@ -2,8 +2,14 @@ import { createContentLoader } from 'vitepress'
 import { basename, extname, sep, normalize, join, dirname } from "path";
 import{ existsSync } from 'fs';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import { spawn } from 'child_process'
 import type { Feature } from "vitepress/dist/client/theme-default/components/VPFeatures.vue";
+
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 type pageType = {
   title: string,
@@ -53,7 +59,7 @@ async function getLastModified(filePath, cwd = process.cwd()) {
 
     let output = "";
     child.stdout.on("data", (data: Buffer) => (output += String(data)));
-    child.on("close", () => resolve(dayjs(output).format("YYYY-MM-DD HH:mm")));
+    child.on("close", () => resolve(dayjs(output).tz('Asia/Shanghai').format("YYYY-MM-DD HH:mm")));
     child.on("error", reject);
   })
 }
@@ -123,7 +129,7 @@ export default  createContentLoader(
               .slice(0, 50) || "",
             link,
             // linkText 可以显示更新时间
-            linkText: lastModified as string ?? dayjs(frontmatter.date).add(8, 'hour').format('YYYY-MM-DD HH:mm'),
+            linkText: lastModified as string ?? dayjs(frontmatter.date).tz('Asia/Shanghai').format('YYYY-MM-DD HH:mm'),
           }
   
           pages.push(page);
