@@ -3,7 +3,7 @@
     "silent": true
   },
   "framework": "vitepress",
-  "installCommand": "git pull --unshallow https://github.com/dargon-start/lz-blog.git master && pnpm install",
+  "installCommand": "git pull --unshallow https://github.com/dargon-start/lz-blog.git main && pnpm install",
   "buildCommand": "vitepress build",
   "cleanUrls": true
 }
