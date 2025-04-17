@@ -18,22 +18,13 @@ type pageType = {
   linkText: string,
 }
 
-declare global {
-  var VITEPRESS_CONFIG: {
-    srcDir: string;
-    rewrites: {
-      inv: Record<string, string>;
-    };
-  };
-}
-
 // 避免导入时报错
 let data: Feature[];
 export { data };
 
 function transformUrlToPath(url: string) {
   const siteConfig = globalThis.VITEPRESS_CONFIG;
-
+  
   let file = url.replace(/(^|\/)$/, "$1index").replace(/(\.html)?$/, ".md");
   file = siteConfig.rewrites.inv[file] || file;
   return join(siteConfig.srcDir, file);
@@ -44,6 +35,7 @@ async function getLastModified(filePath, cwd = process.cwd()) {
 
   return new Promise((resolve, reject) => {
     const cwd = dirname(file);
+
     if (!existsSync(cwd)) return resolve(0);
     const fileName = basename(file);
 
@@ -142,9 +134,6 @@ export default  createContentLoader(
         let time2 = dayjs(b.linkText);
         return time1.isAfter(time2) ? -1 : 1;
       })
-      // 发布时间降序排列
-      
-      // return pages.sort((a, b) => b.fileTimeInfo[0] - a.fileTimeInfo[0]);
     },
   }
 );
