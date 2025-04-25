@@ -14,11 +14,11 @@
 		"prefix": "efc",
 		"body": [
 			"interface ${TM_FILENAME_BASE}Props {",
-			"  title: string;",
+			"",
 			"}",
 			"",
-			"export default function $TM_FILENAME_BASE({ title }: ${TM_FILENAME_BASE}Props) {",
-			"  return <div>{title}</div>;",
+			"export default function $TM_FILENAME_BASE({  }: ${TM_FILENAME_BASE}Props) {",
+			"  return <></>",
 			"}",
 		],
 		"description": "create a react function component"
