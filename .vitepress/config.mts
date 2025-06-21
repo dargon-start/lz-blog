@@ -64,6 +64,7 @@ export default defineConfig({
       { text: 'Vue', link: '/Vue/Vue3基础' },
       { text: 'React', link: '/React/Immutable' },
       { text: 'SSR', link: '/SSR/nextJs渲染原理' },
+      { text: 'NestJs', link: '/NestJs/初始NestJs' },
     ],
     sidebar: {
       '/随记/':[walk('./','随记')],
@@ -73,6 +74,7 @@ export default defineConfig({
       '/Vue':[walk('./', 'Vue')],
       '/React':[walk('./', 'React')],
       '/SSR':[walk('./', 'SSR')],
+      '/NestJs':[walk('./', 'NestJs')],
     },
     socialLinks: [
       { icon: 'github', link: 'https://github.com/dargon-start/lz-blog' }

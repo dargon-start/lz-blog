@@ -1,4 +1,4 @@
-# 初识nestjs
+# 初识NestJs
 
 ## 介绍
 Nest 是一个用于构建高效，可扩展的 Node.js 服务器端应用程序的框架。它使用渐进式 JavaScript，内置并完全支持 TypeScript（但仍然允许开发人员使用纯 JavaScript 编写代码）并结合了 OOP（面向对象编程），FP（函数式编程）和 FRP（函数式响应编程）的元素。
@@ -14,20 +14,22 @@ nest new project-name
 
 将会创建 project-name 目录， 安装 node_modules 和一些其他样板文件，并将创建一个 src 目录，目录中包含几个核心文件。
 
-src
- ├── app.controller.spec.ts
- ├── app.controller.ts
- ├── app.module.ts
- ├── app.service.ts
- └── main.ts
+src/
+├── app.controller.spec.ts
+├── app.controller.ts
+├── app.module.ts
+├── app.service.ts
+└── main.ts
 
 以下是这些核心文件的简要概述：
 
-app.controller.ts	带有单个路由的基本控制器示例。
-app.controller.spec.ts	对于基本控制器的单元测试样例
-app.module.ts	应用程序的根模块。
-app.service.ts	带有单个方法的基本服务
-main.ts	应用程序入口文件。它使用 NestFactory 用来创建 Nest 应用实例。
+| 文件名                    | 描述                                                         |
+|-------------------------|------------------------------------------------------------|
+| `app.controller.ts`      | 带有单个路由的基本控制器示例。                               |
+| `app.controller.spec.ts` | 对于基本控制器的单元测试样例。                               |
+| `app.module.ts`          | 应用程序的根模块。                                           |
+| `app.service.ts`         | 带有单个方法的基本服务。                                     |
+| `main.ts`                | 应用程序入口文件。使用 `NestFactory` 创建 Nest 应用实例。     |
 
 ## 模块 module
 
