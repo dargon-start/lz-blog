@@ -31,6 +31,9 @@ hero:
     - theme: brand
       text: 工程化
       link: /工程化/npm包打补丁
+    - theme: brand
+      text: NestJs
+      link: /NestJs/初始NestJs  
 
 --- 
 

@@ -14,12 +14,14 @@ nest new project-name
 
 将会创建 project-name 目录， 安装 node_modules 和一些其他样板文件，并将创建一个 src 目录，目录中包含几个核心文件。
 
+```text
 src/
 ├── app.controller.spec.ts
 ├── app.controller.ts
 ├── app.module.ts
 ├── app.service.ts
 └── main.ts
+```
 
 以下是这些核心文件的简要概述：
 
