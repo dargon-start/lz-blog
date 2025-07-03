@@ -12,14 +12,24 @@ export const walk = function (dir, subDir = '') {
 		file = dir + subDir+ '/' + file;
     
 		if (path.extname(file) === '.md') {
-			results.push(file);
+      const stats = fs.statSync(file);
+
+			results.push({
+        name: file,
+        birthtime: stats.birthtime
+      });
 		}
 	})
 
+  // 按创建时间升序排序
+  results.sort((a, b) => {
+    return new Date(a.birthtime).getTime() - new Date(b.birthtime).getTime()
+  });
+
 	const items = results.map((item) => {
 		return {
-			text: path.basename(item, '.md'),
-			link: item.slice(2, -3)
+			text: path.basename(item.name, '.md'),
+			link: item.name.slice(2, -3)
 		}
 	}).sort((a, b) => {
 		const index1 = Number(a.text.split('.')[0])
