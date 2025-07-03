@@ -1,34 +1,74 @@
 import { defineConfig } from 'vitepress'
-import path from 'path';
-import fs from 'fs';
 import { La51Plugin } from 'vitepress-plugin-51la'
+import { basename, extname, sep, normalize, join, dirname } from "path";
+import{ existsSync, readdirSync, statSync } from 'fs';
+import { spawn } from 'child_process'
+import dayjs from 'dayjs';
+
+function transformUrlToPath(url: string) {
+  const siteConfig = globalThis.VITEPRESS_CONFIG;
+  
+  let file = url.replace(/(^|\/)$/, "$1index").replace(/(\.html)?$/, ".md");
+  file = siteConfig.rewrites.inv[file] || file;
+  return join(siteConfig.srcDir, file);
+}
+
+async function getLastModified(filePath, cwd = process.cwd()) {
+  const file = transformUrlToPath(filePath);
+
+  return new Promise((resolve, reject) => {
+    const cwd = dirname(file);
+
+    if (!existsSync(cwd)) return resolve(0);
+    const fileName = basename(file);
+
+    const args = [
+      'log', 
+      '--reverse',
+      '-1',                  // 只取最后一次提交
+      '--pretty=format:%aI', // ISO 8601 格式时间
+      '--', 
+      fileName
+    ]
+
+    const child = spawn('git', args, { cwd })
+
+    let output = "";
+    child.stdout.on("data", (data: Buffer) => (output += String(data)));
+    child.on("close", () => resolve(dayjs(output).tz('Asia/Shanghai').format("YYYY-MM-DD HH:mm")));
+    child.on("error", reject);
+  })
+}
 
 // 动态生成侧边栏函数
 export const walk = function (dir, subDir = '') {
 	let results:any[] = [];
-	const list = fs.readdirSync(dir + subDir);
+	const list = readdirSync(dir + subDir);
   
 	list.forEach((file) => {
 		file = dir + subDir+ '/' + file;
     
-		if (path.extname(file) === '.md') {
-      const stats = fs.statSync(file);
+		if (extname(file) === '.md') {
+      const creatTime = getLastModified(file);
 
 			results.push({
         name: file,
-        birthtime: stats.birthtime
+        creatTime,
       });
 		}
 	})
 
   // 按创建时间升序排序
   results.sort((a, b) => {
-    return new Date(a.birthtime).getTime() - new Date(b.birthtime).getTime()
+    return dayjs(a.creatTime).valueOf() - dayjs(b.creatTime).valueOf()
   });
+
+  console.log(results, 'results');
+  
 
 	const items = results.map((item) => {
 		return {
-			text: path.basename(item.name, '.md'),
+			text: basename(item.name, '.md'),
 			link: item.name.slice(2, -3)
 		}
 	}).sort((a, b) => {
