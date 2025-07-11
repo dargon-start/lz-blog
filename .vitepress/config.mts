@@ -74,16 +74,20 @@ export default defineConfig({
       { text: "NestJs", link: "/NestJs/初始NestJs" },
     ],
     sidebar: {
-      "/随记/": [walk("./", "随记")],
-      "/JavaScript/": [walk("./", "JavaScript")],
-      "/CSS/": [walk("./", "CSS")],
-      "/工程化": [walk("./", "工程化")],
-      "/Vue": [walk("./", "Vue")],
-      "/React": [walk("./", "React")],
-      "/SSR": [walk("./", "SSR")],
+      "/随记/": [{ text: "随记", items: await generateSidebar("./随记") }],
+      "/JavaScript/": [
+        { text: "JavaScript", items: await generateSidebar("./JavaScript") },
+      ],
+      "/CSS/": [{ text: "CSS", items: await generateSidebar("./CSS") }],
+      "/工程化/": [
+        { text: "工程化", items: await generateSidebar("./工程化") },
+      ],
+      "/Vue/": [{ text: "Vue", items: await generateSidebar("./Vue") }],
+      "/React/": [{ text: "React", items: await generateSidebar("./React") }],
+      "/SSR/": [{ text: "SSR", items: await generateSidebar("./SSR") }],
       "/NestJs": [
         {
-          text: "Sorted by Git Commit",
+          text: "NestJs",
           items: await generateSidebar("./NestJs"),
         },
       ],
