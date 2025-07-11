@@ -45,7 +45,7 @@ async function collectMarkdownFiles(startPath) {
       } else if (isMarkdownFile(entry.name)) {
         const gitTime = getLastCommitTime(fullPath);
         const title = entry.name.replace(/\.md$/, "");
-        const link = `${relPath.replace(/\.md$/, "")}`;
+        const link = `${fullPath.replace(/\.md$/, "")}`;
 
         files.push({
           text: title,
