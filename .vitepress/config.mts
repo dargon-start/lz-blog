@@ -1,98 +1,55 @@
-import { defineConfig } from 'vitepress'
-import { La51Plugin } from 'vitepress-plugin-51la'
+import { defineConfig } from "vitepress";
+import { La51Plugin } from "vitepress-plugin-51la";
 import { basename, extname, sep, normalize, join, dirname } from "path";
-import{ existsSync, readdirSync, statSync } from 'fs';
-import { spawn } from 'child_process'
-import dayjs from 'dayjs';
-
-function transformUrlToPath(url: string) {
-  const siteConfig = globalThis.VITEPRESS_CONFIG;
-  
-  let file = url.replace(/(^|\/)$/, "$1index").replace(/(\.html)?$/, ".md");
-  file = siteConfig.rewrites.inv[file] || file;
-  return join(siteConfig.srcDir, file);
-}
-
-async function getLastModified(filePath, cwd = process.cwd()) {
-  const file = transformUrlToPath(filePath);
-
-  return new Promise((resolve, reject) => {
-    const cwd = dirname(file);
-
-    if (!existsSync(cwd)) return resolve(0);
-    const fileName = basename(file);
-
-    const args = [
-      'log', 
-      '--reverse',
-      '-1',                  // 只取最后一次提交
-      '--pretty=format:%aI', // ISO 8601 格式时间
-      '--', 
-      fileName
-    ]
-
-    const child = spawn('git', args, { cwd })
-
-    let output = "";
-    child.stdout.on("data", (data: Buffer) => (output += String(data)));
-    child.on("close", () => resolve(dayjs(output).tz('Asia/Shanghai').format("YYYY-MM-DD HH:mm")));
-    child.on("error", reject);
-  })
-}
+import { existsSync, readdirSync, statSync } from "fs";
+import { spawn } from "child_process";
+import dayjs from "dayjs";
+import generateSidebar from "./generateSidebar";
 
 // 动态生成侧边栏函数
-export const walk = function (dir, subDir = '') {
-	let results:any[] = [];
-	const list = readdirSync(dir + subDir);
-  
-	list.forEach((file) => {
-		file = dir + subDir+ '/' + file;
-    
-		if (extname(file) === '.md') {
-      const creatTime = getLastModified(file);
+export const walk = function (dir, subDir = "") {
+  let results: any[] = [];
+  const list = readdirSync(dir + subDir);
 
-			results.push({
+  list.forEach((file) => {
+    file = dir + subDir + "/" + file;
+
+    console.log("正在处理文件", file);
+
+    if (extname(file) === ".md") {
+      results.push({
         name: file,
-        creatTime,
       });
-		}
-	})
-
-  // 按创建时间升序排序
-  results.sort((a, b) => {
-    return dayjs(a.creatTime).valueOf() - dayjs(b.creatTime).valueOf()
+    }
   });
 
-  console.log(results, 'results');
-  
+  const items = results
+    .map((item) => {
+      return {
+        text: basename(item.name, ".md"),
+        link: item.name.slice(2, -3),
+      };
+    })
+    .sort((a, b) => {
+      const index1 = Number(a.text.split(".")[0]);
+      const index2 = Number(b.text.split(".")[0]);
+      return index1 - index2;
+    });
 
-	const items = results.map((item) => {
-		return {
-			text: basename(item.name, '.md'),
-			link: item.name.slice(2, -3)
-		}
-	}).sort((a, b) => {
-		const index1 = Number(a.text.split('.')[0])
-		const index2 = Number(b.text.split('.')[0])
-		return index1 - index2
-	})
-  
-	return {
-		text: subDir,
-		collapsible: true,
-		collapsed: false,
-		items: items
-	}
+  return {
+    text: subDir,
+    collapsible: true,
+    collapsed: false,
+    items: items,
+  };
 };
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Lz blog",
   description: "龙仔个人博客",
-  cleanUrls:true,
-  head:[
-    ['link', { rel: 'icon', href: '/logo.png' }],
-  ],
+  cleanUrls: true,
+  head: [["link", { rel: "icon", href: "/logo.png" }]],
   // 忽略文章中的死链接，VitePress 不会因死链接而导致构建失败
   ignoreDeadLinks: true,
   // 是否展示最近git提交时间
@@ -105,31 +62,36 @@ export default defineConfig({
     defaultHighlightLang: "js",
   },
   themeConfig: {
-    logo:'/logo.png',
+    logo: "/logo.png",
     nav: [
-      { text: '随记', link: '/随记/el-tabs切换，对象数据发生变化' },
-      { text: 'JavaScript', link: '/JavaScript/基本引用类型' },
-      { text: 'CSS', link: '/CSS/css中隐藏元素的方式' },
-      { text: '工程化', link: '/工程化/npm包打补丁' },
-      { text: 'Vue', link: '/Vue/Vue3基础' },
-      { text: 'React', link: '/React/Immutable' },
-      { text: 'SSR', link: '/SSR/nextJs渲染原理' },
-      { text: 'NestJs', link: '/NestJs/初始NestJs' },
+      { text: "随记", link: "/随记/el-tabs切换，对象数据发生变化" },
+      { text: "JavaScript", link: "/JavaScript/基本引用类型" },
+      { text: "CSS", link: "/CSS/css中隐藏元素的方式" },
+      { text: "工程化", link: "/工程化/npm包打补丁" },
+      { text: "Vue", link: "/Vue/Vue3基础" },
+      { text: "React", link: "/React/Immutable" },
+      { text: "SSR", link: "/SSR/nextJs渲染原理" },
+      { text: "NestJs", link: "/NestJs/初始NestJs" },
     ],
     sidebar: {
-      '/随记/':[walk('./','随记')],
-      '/JavaScript/': [walk('./','JavaScript')],
-      '/CSS/':[walk('./','CSS')],
-      '/工程化':[walk('./', '工程化')],
-      '/Vue':[walk('./', 'Vue')],
-      '/React':[walk('./', 'React')],
-      '/SSR':[walk('./', 'SSR')],
-      '/NestJs':[walk('./', 'NestJs')],
+      "/随记/": [walk("./", "随记")],
+      "/JavaScript/": [walk("./", "JavaScript")],
+      "/CSS/": [walk("./", "CSS")],
+      "/工程化": [walk("./", "工程化")],
+      "/Vue": [walk("./", "Vue")],
+      "/React": [walk("./", "React")],
+      "/SSR": [walk("./", "SSR")],
+      "/NestJs": [
+        {
+          text: "Sorted by Git Commit",
+          items: await generateSidebar("./NestJs"),
+        },
+      ],
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/dargon-start/lz-blog' }
+      { icon: "github", link: "https://github.com/dargon-start/lz-blog" },
     ],
-    
+
     // 右侧文章索引级别
     outline: "deep",
     // 右侧索引展示文本
@@ -165,14 +127,13 @@ export default defineConfig({
         },
       },
     },
-    
   },
   vite: {
     plugins: [
       La51Plugin({
-        id: '3LnhWXc4ckxdNjVU',
-        ck: '3LnhWXc4ckxdNjVU'
-      })
-    ]
-  }
-})
+        id: "3LnhWXc4ckxdNjVU",
+        ck: "3LnhWXc4ckxdNjVU",
+      }),
+    ],
+  },
+});
