@@ -1,48 +1,6 @@
 import { defineConfig } from "vitepress";
 import { La51Plugin } from "vitepress-plugin-51la";
-import { basename, extname, sep, normalize, join, dirname } from "path";
-import { existsSync, readdirSync, statSync } from "fs";
-import { spawn } from "child_process";
-import dayjs from "dayjs";
 import generateSidebar from "./generateSidebar";
-
-// 动态生成侧边栏函数
-export const walk = function (dir, subDir = "") {
-  let results: any[] = [];
-  const list = readdirSync(dir + subDir);
-
-  list.forEach((file) => {
-    file = dir + subDir + "/" + file;
-
-    console.log("正在处理文件", file);
-
-    if (extname(file) === ".md") {
-      results.push({
-        name: file,
-      });
-    }
-  });
-
-  const items = results
-    .map((item) => {
-      return {
-        text: basename(item.name, ".md"),
-        link: item.name.slice(2, -3),
-      };
-    })
-    .sort((a, b) => {
-      const index1 = Number(a.text.split(".")[0]);
-      const index2 = Number(b.text.split(".")[0]);
-      return index1 - index2;
-    });
-
-  return {
-    text: subDir,
-    collapsible: true,
-    collapsed: false,
-    items: items,
-  };
-};
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({

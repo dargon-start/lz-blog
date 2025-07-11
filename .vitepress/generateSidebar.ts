@@ -69,7 +69,7 @@ async function generateSidebarConfig(docsDir = "./docs") {
 
   // 排序：最新的提交排在最前面
   files.sort(
-    (a, b) => new Date(a.gitTime).getTime() - new Date(b.gitTime).getTime()
+    (a, b) => new Date(b.gitTime).getTime() - new Date(a.gitTime).getTime()
   );
 
   // 返回 VitePress 支持的 sidebar 数组结构
