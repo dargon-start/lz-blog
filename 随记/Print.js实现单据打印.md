@@ -269,3 +269,9 @@ printJS({
 
 ```
 
+
+## 实现效果
+
+对打印数据量无限制，可以自动实现换页打印
+
+![alt text](./images/rukudan2.png)
