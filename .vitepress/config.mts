@@ -31,6 +31,7 @@ export default withMermaid({
       { text: "React", link: "/React/Immutable" },
       { text: "SSR", link: "/SSR/nextJs渲染原理" },
       { text: "NestJs", link: "/NestJs/初始NestJs" },
+      { text: "测试", link: "/test" },
     ],
     sidebar: {
       "/随记/": [{ text: "随记", items: await generateSidebar("./随记") }],
