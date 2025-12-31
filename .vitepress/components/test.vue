@@ -5,11 +5,12 @@
     <button @click="emits('updateTitle', 'new title')">updateTitle</button>
     <button @click="count++">{{ count }}</button>
     <button @click="obj.name = 'new name'">{{ obj.name }}</button>
+    <p :style="{ color: themeColor }">Injected Theme Color: {{ themeColor }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed ,inject} from 'vue'
 
 const emits = defineEmits({
   submit: (data: string) => {
@@ -38,6 +39,15 @@ const obj: { name: string, age: number } = reactive({
   name: 'test',
   age: 18
 })
+
+const totle = computed<number>(() => {
+  return count.value + obj.age
+})
+
+const themeColor = inject<string>('themeColor', 'yellow')
+
+
+
 
 
 </script>
