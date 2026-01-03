@@ -1,9 +1,10 @@
 import { defineConfig } from "vitepress";
 import { La51Plugin } from "vitepress-plugin-51la";
 import generateSidebar from "./generateSidebar";
+import { withMermaid } from "vitepress-plugin-mermaid";
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default withMermaid({
   title: "Lz blog",
   description: "龙仔个人博客",
   cleanUrls: true,
