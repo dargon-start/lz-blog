@@ -154,3 +154,83 @@ Webpack 特定方法，此方法可实现自定义上下文；
 
 Vite 不支持；
 
+## css导入写法修改
+
+`~`符号是webpack的语法，vite中需要去掉
+
+```css
+@import "~@/assets/fonts/iconfont.css"; // webpack环境
+
+@import "@/assets/fonts/iconfont.css"; // vite环境
+```
+
+## 修改不兼容esm的依赖导入方式
+
+例如：leader-line只导出了umd格式的引用方式
+![alt text](./images//leader-line.png)
+
+方案:使用 <script> 标签 + 全局变量
+
+在 index.html 中通过 CDN 或本地脚本引入
+
+```html
+<!-- index.html（Vite 项目根目录） -->
+<script src="https://cdn.jsdelivr.net/npm/leader-line@1/leader-line.min.js"></script>
+```
+
+组件中即可直接使用LeaderLine函数
+
+
+## vite.config.js示例
+
+```js
+import { defineConfig, loadEnv } from 'vite'
+import vue from '@vitejs/plugin-vue2'
+import jsx from '@vitejs/plugin-vue2-jsx'
+import path from 'path'
+import legacy from '@vitejs/plugin-legacy'
+
+function resolve(url) {
+  return path.resolve(__dirname, url)
+}
+
+export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
+
+  const env = loadEnv(mode, process.cwd(), '')
+  const isProduction = process.env.NODE_ENV === 'production'
+
+  return {
+    // 部署路径为web
+    base: isProduction ? '/web/' : '/',
+    define: {
+      'process.env': env,
+      global: 'window',
+    },
+    plugins: [
+      vue(),
+      jsx(),
+      legacy({
+        targets: ['ie >= 11'],
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
+      }),
+    ],
+    resolve: {
+      alias: {
+        '@': resolve('src'),
+        'components': resolve('src/components'),
+      },
+      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
+    },
+    build: {
+      target: 'es2015',
+    },
+    server: {
+      port: 8888,
+      open: true,
+      proxy: {
+      },
+    },
+  }
+})
+
+```
