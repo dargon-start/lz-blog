@@ -19,11 +19,12 @@ npm install  @types/node@20
 ```
 
 ## 配置vite.config.js文件
-```
+```js
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue2'
 import jsx from '@vitejs/plugin-vue2-jsx'
 import path from 'path'
+import legacy from '@vitejs/plugin-legacy'
 
 function resolve(url) {
   return path.resolve(__dirname, url)
@@ -32,9 +33,11 @@ function resolve(url) {
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
 
   const env = loadEnv(mode, process.cwd(), '')
+  const isProduction = process.env.NODE_ENV === 'production'
 
   return {
-    base: '/',
+    // 部署路径为web
+    base: isProduction ? '/web/' : '/',
     define: {
       'process.env': env,
       global: 'window',
@@ -42,6 +45,10 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
     plugins: [
       vue(),
       jsx(),
+      legacy({
+        targets: ['ie >= 11'],
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
+      }),
     ],
     resolve: {
       alias: {
@@ -50,32 +57,19 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
       },
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
     },
-    css: {
-        // 插入配置scss全局变量，否则组件中无法识别找到scss变量
-    	preprocessorOptions: {
-            scss: {
-                additionalData: '@import "element-cisdi/packages/theme-chalk/src/patch/common/var.scss"; ',
-            },
-      },
+    build: {
+      target: 'es2015',
     },
     server: {
+      port: 8888,
       open: true,
-      port: 8092,
       proxy: {
-        '/mock': {
-          target: env.VITE_APP_API_URL,
-          changeOrigin: true,
-          pathRewrite: {
-            '^/mock': '',
-          },
-        },
       },
     },
   }
 })
 
 ```
-
 
 ## 修改环境变量
 
@@ -93,7 +87,7 @@ VITE_APP_API_URL = 'https://xxx' // [!code ++]
 
 将index.html从public移到项目根目录，并且修改资源引入的路径，以及引入`/src/main.js`文件。
 
-```
+```html
 <!DOCTYPE html>
 <html lang="">
   <head>
@@ -179,58 +173,3 @@ Vite 不支持；
 ```
 
 组件中即可直接使用LeaderLine函数
-
-
-## vite.config.js示例
-
-```js
-import { defineConfig, loadEnv } from 'vite'
-import vue from '@vitejs/plugin-vue2'
-import jsx from '@vitejs/plugin-vue2-jsx'
-import path from 'path'
-import legacy from '@vitejs/plugin-legacy'
-
-function resolve(url) {
-  return path.resolve(__dirname, url)
-}
-
-export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
-
-  const env = loadEnv(mode, process.cwd(), '')
-  const isProduction = process.env.NODE_ENV === 'production'
-
-  return {
-    // 部署路径为web
-    base: isProduction ? '/web/' : '/',
-    define: {
-      'process.env': env,
-      global: 'window',
-    },
-    plugins: [
-      vue(),
-      jsx(),
-      legacy({
-        targets: ['ie >= 11'],
-        additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
-      }),
-    ],
-    resolve: {
-      alias: {
-        '@': resolve('src'),
-        'components': resolve('src/components'),
-      },
-      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
-    },
-    build: {
-      target: 'es2015',
-    },
-    server: {
-      port: 8888,
-      open: true,
-      proxy: {
-      },
-    },
-  }
-})
-
-```
