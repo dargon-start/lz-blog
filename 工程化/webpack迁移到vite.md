@@ -74,7 +74,7 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
 ## 修改环境变量
 
 将`VUE`前缀改为`VITE`, vite只能识别VITE前缀的环境变量
-``` 
+``` js
 VUE_APP_MODE = development // [!code --]
 VUE_APP_API_URL = 'https://xxx' // [!code --]
 
@@ -95,26 +95,16 @@ VITE_APP_API_URL = 'https://xxx' // [!code ++]
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="icon" href="/favicon.ico" />
-    <title>imc-device-rigang-web</title>
-    <script src="/jessibuca-pro.js"></script>
-    <script src="/ZLMRTCClient.js"></script>
-    <script src="/webrtc/libs/adapter.min.js"></script>
-    <script src="/webrtc/webrtcstreamer.js"></script>
+    <title>lz-blog</title>
   </head>
-  
+
   <body>
-    <!-- <script src="./web/demoutils.js"></script> -->
-    
     <noscript>
-      <strong
-        >We're sorry but imc-device-rigang-web doesn't work
-        properly without JavaScript enabled. Please enable it to
-        continue.</strong
-      >
+      <strong>We're sorry but lz-blog doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
-    <script type="module" src="/src/main.js"></script> // [!code ++]
-    <!-- built files will be auto injected -->
+    <script type="module" src="/src/main.js"></script> 
+    
   </body>
   <style>
     html {
@@ -163,7 +153,7 @@ Vite 不支持；
 例如：leader-line只导出了umd格式的引用方式
 ![alt text](./images//leader-line.png)
 
-方案:使用 <script> 标签 + 全局变量
+方案:使用 `<script>` 标签 + 全局变量
 
 在 index.html 中通过 CDN 或本地脚本引入
 
