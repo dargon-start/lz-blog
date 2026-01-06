@@ -127,3 +127,10 @@ ref包裹整个对象。
     this._value = __v_isShallow ? value : toReactive(value)
   }
 ```
+
+
+### 父子组件生命周期执行顺序
+
+总结：先挂载子组件，再挂载子组件
+
+![alt text](./images/生命周期执行顺序.png)
