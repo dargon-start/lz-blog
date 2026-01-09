@@ -443,96 +443,53 @@ const Header = memo(function (props) {
 export default Header;
 ```
 
-### ref绑定组件
+#### 函数组件useRef绑定组件
 
-#### ref绑定类组件
-ref可以绑定到类组件上，但是不能绑定到函数组件上。因为函数组件不存在实例。
+- 使用 forwardRef 使子组件能接收 ref。（从 React 19 开始，你现在可以在函数组件中将 ref 作为 prop 进行访问）
 
-```javascript
-export class App extends PureComponent {
-  state={
-    count:100,
-    list:[1,2,4,3]
-  }
-  constructor(){
-    super()
-    this.forwardCpm = createRef()
-  }
-  add = ()=>{
-    console.log(this.forwardCpm);
-  }
-  render() {
-    console.log('app.js');
-    return (
-      <>
-        <button onClick={this.add}>+1</button>
-        <Header ref={this.forwardCpm}></Header>
-      </>
-    )
-  }
-}
-```
-
-组件实例：
-![](https://cdn.nlark.com/yuque/0/2022/png/27505031/1666957685706-df7223fb-dd86-4231-b061-214295e5f21d.png)
-
-函数组件可以通过forwardRef来绑定到子组件中的某一个元素上。
-
-```javascript
-// 父组件
-import React, { PureComponent,createRef} from 'react'
-import Header from './components/Header';
-
-export class App extends PureComponent {
-  state={
-    count:100,
-    list:[1,2,4,3]
-  }
-  constructor(){
-    super()
-    this.forwardCpm = createRef()
-  }
-  add = ()=>{
-    console.log(this.forwardCpm);
-  }
-  render() {
-    console.log('app.js');
-    return (
-      <>
-        <button onClick={this.add}>+1</button>
-        <Header ref={this.forwardCpm}></Header>
-      </>
-    )
-  }
-}
-
-
-export default App;
-
-```
+- 在子组件内部使用 useImperativeHandle 来自定义通过 ref 暴露的内容。
 
 ```jsx
 // 子组件
-import React, {memo, forwardRef} from "react";
+import { useImperativeHandle, useRef,forwardRef } from 'react';
 
-const Header = forwardRef((props, ref) => (
-  <>
-    <div ref={ref}>hahahah</div>
-  </>
-));
-export default Header;
+export interface FunctionComponentsHandle {
+  clickHandler: () => void;
+  h1:HTMLHeadingElement | null;
+}
+
+const FunctionComponents = forwardRef<FunctionComponentsHandle, {}>((props, ref) => {
+  console.log(ref,'ref');
+  const h1Ref = useRef<HTMLHeadingElement>(null);
+  
+  function clickHandler() {
+    console.log("click");
+  }
+
+  useImperativeHandle(ref, () => ({
+    clickHandler, // 暴露函数
+    h1:h1Ref.current // 暴露dom
+  }));
+
+  return (
+    <div>
+      <h1 ref={h1Ref}>Function Components</h1>
+    </div>
+  );
+});
+
+export default FunctionComponents;
 ```
 
-#### 函数组件useRef绑定组件
 
 ```jsx
+// 父组件
 import { useRef, useEffect } from 'react'
-import ClassComponents from './components/classComponents'
+import FunctionComponents, { type FunctionComponentsHandle } from './components/functionComponents'
 
 function App() {
   const inputRef = useRef<HTMLInputElement>(null)
-  const classRef = useRef<ClassComponents>(null)
-
+  const functionRef = useRef<FunctionComponentsHandle>(null)
   const focusInput = () => {
     if (inputRef.current) {
       inputRef.current.focus()
@@ -545,7 +502,7 @@ function App() {
 
   return (
     <>
-      <ClassComponents ref={classRef}/>
+      <FunctionComponents ref={functionRef}/>
       <input ref={inputRef} />
       <button onClick={focusInput}>Focus Input</button>
     </>
