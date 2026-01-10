@@ -512,6 +512,87 @@ function App() {
 export default App
 ```
 
+### 受控组件与非受控组件
+
+#### 1. 受控组件 (Controlled Components)
+
+在受控组件中，表单数据由 React 组件的 `state` 管理。每当表单项发生变化时，都会触发 `onChange` 事件并更新 `state`，从而重新渲染组件。
+
+**特点：**
+- 数据驱动：状态是唯一的真理来源（Single Source of Truth）。
+- 实时校验：可以在用户输入时立即进行校验或格式化。
+
+**示例代码：**
+
+```jsx
+import React, { useState } from 'react';
+
+function ControlledInput() {
+  const [value, setValue] = useState('');
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+    console.log('当前输入值:', e.target.value);
+  };
+
+  return (
+    <div>
+      <label>受控组件: </label>
+      <input type="text" value={value} onChange={handleChange} />
+      <p>输入的内容: {value}</p>
+    </div>
+  );
+}
+```
+
+#### 2. 非受控组件 (Uncontrolled Components)
+
+在非受控组件中，表单数据由 DOM 节点本身处理。如果需要获取表单的值，通常使用 `ref` 来从 DOM 中抓取数据。
+
+**特点：**
+- 接近原生：更像传统的 HTML 表单处理方式。
+- 简单直接：对于简单的表单或集成第三方非 React 库（如 jQuery 插件）时非常有用。
+- 使用 `defaultValue`：设置初始值。
+
+**示例代码：**
+
+```jsx
+import React, { useRef } from 'react';
+
+function UncontrolledInput() {
+  const inputRef = useRef(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert('提交的值: ' + inputRef.current.value);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>非受控组件: </label>
+      {/* 使用 defaultValue 设置初始值 */}
+      <input type="text" defaultValue="初始值" ref={inputRef} />
+      <button type="submit">提交</button>
+    </form>
+  );
+}
+```
+
+#### 3. 受控 vs 非受控 总结对比
+
+| 特性 | 受控组件 | 非受控组件 |
+| :--- | :--- | :--- |
+| **数据更新** | 必须通过事件处理器更新 `state` | 由 DOM 节点自动处理 |
+| **数据源** | React 的 `state` | DOM 节点 |
+| **实时获取值** | 支持（通过 state） | 不支持（需要手动读取 ref） |
+| **初始值设置** | `value={state}` | `defaultValue="xxx"` |
+| **适用场景** | 实时验证、动态过滤、强制格式化 | 简单表单、一次性取值、集成非 React 库 |
+
+> [!TIP]
+> **官方推荐**：在大多数情况下，React 推荐使用 **受控组件** 来实现表单。
+
+
+
 
 ### 高阶组件
 #### 1.增强props

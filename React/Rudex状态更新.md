@@ -128,11 +128,36 @@ export default store
 
 ## redux-tooltik 创建reducer
 
+### 🚀 createAsyncThunk
+
+`createAsyncThunk` 是 Redux Toolkit 提供的一个用于处理异步逻辑的工具。它能够自动生成代表异步请求生命周期的 **Action Types**，并根据 Promise 的状态触发相应的 Action。
+
+#### 1. 基本语法
+```js
+const actionCreator = createAsyncThunk(typePrefix, payloadCreator)
+```
+- **`typePrefix`**: 字符串，用于生成 Action 类型的标识符（如 `home/fetchHomeData`）。生成的三个类型的 Action 分别是：
+    - `typePrefix/pending`: 请求开始。
+    - `typePrefix/fulfilled`: 请求成功（Promise 已解决）。
+    - `typePrefix/rejected`: 请求失败（Promise 已拒绝）。
+- **`payloadCreator`**: 异步回调函数，返回一个 Promise（或使用 `async/await`）。它接收两个参数：
+    - `arg`: 调用该 action 时传递的参数（payload）。
+    - `thunkAPI`: 一个包含 `dispatch`, `getState`, `rejectWithValue` 等工具的对象。
+
+#### 2. 处理异步数据的两种方式
+
+1.  **直接在 Payload Creator 中 dispatch (如本例)**：在回调函数中手动调用其他 action 来更新状态。适用于一个请求需要触发布局多个 reducer 的场景。
+2.  **通过 `extraReducers` (官方推荐)**：在 `createSlice` 中使用 `extraReducers` 监听生成的 `pending/fulfilled/rejected` 状态。这种方式更加清晰，逻辑更内聚。
+
 ```js
 
 
 import { createSlice , createAsyncThunk } from '@reduxjs/toolkit'
 import { getDiscount, getGoodPrice, getHighScore, getHomeHotRecommendData, getHomeLongforData } from '@/services/modules/home';
+
+
+
+
 export const fetchHomeData = createAsyncThunk('goodPriceData', (payload,{dispatch,getState})=>{
      getGoodPrice().then(res=>{
         dispatch(goodPriceAction(res))
@@ -186,5 +211,7 @@ export default homeSlice.reducer
 ```
 
 ## 案例
+
+https://github.com/altence/lightence-ant-design-react-template/blob/main/src/store/slices/authSlice.ts
 
 https://github.com/dargon-start/lz-airbnd/tree/main/src/store
