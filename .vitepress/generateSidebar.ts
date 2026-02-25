@@ -8,7 +8,7 @@ import { fileURLToPath } from "url";
 /**
  * 获取某个文件的最后 Git 提交时间
  */
-function getLastCommitTime(filePath) {
+function getLastCommitTime(filePath:string) {
   try {
     const output = execSync(`git log -1 --format=%ad --date=iso ${filePath}`, {
       encoding: "utf8",
@@ -23,17 +23,17 @@ function getLastCommitTime(filePath) {
 /**
  * 判断是否是 Markdown 文件
  */
-function isMarkdownFile(file) {
+function isMarkdownFile(file:string) {
   return file.endsWith(".md");
 }
 
 /**
  * 递归遍历目录并收集所有 .md 文件信息
  */
-async function collectMarkdownFiles(startPath) {
+async function collectMarkdownFiles(startPath:string) {
   const files: any[] = [];
 
-  function walk(currentPath, relativePath = "") {
+  function walk(currentPath:string, relativePath = "") {
     const entries = fs.readdirSync(currentPath, { withFileTypes: true });
 
     for (const entry of entries) {
