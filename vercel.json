@@ -4,6 +4,6 @@
   },
   "framework": "vitepress",
   "installCommand": "git pull --unshallow https://github.com/dargon-start/lz-blog.git main && pnpm install",
-  "buildCommand": "vitepress build",
+  "buildCommand": "node api/build-index.js && vitepress build",
   "cleanUrls": true
 }
